@@ -1,0 +1,62 @@
+Box: 10.000000 x 20.000000 x 30.000000
+
+--- Start main() ---
+
+
+--- Start doBoxes() ---
+
+Box: 3.000000 x 3.000000 x 3.000000
+Box: 4.000000 x 5.000000 x 6.000000
+b1 volume: 27.000000
+b2 volume: 120.000000
+b1 volume: 91.125000
+b2 volume: 15.000000
+Box: 2.000000 x 2.500000 x 3.000000
+Box: 2.000000 x 2.500000 x 3.000000
+b3 does not equal b4
+Now, b3 equals b4
+
+--- End doBoxes() ---
+
+Box destructor, 4.500000 x 4.500000 x 4.500000
+Box destructor, 2.500000 x 3.000000 x 2.000000
+Box destructor, 3.750000 x 4.500000 x 3.000000
+Box destructor, 3.750000 x 4.500000 x 3.000000
+
+--- thisFunc() ---
+
+Box: 99.000000 x 99.000000 x 99.000000
+
+--- thisFunc() ---
+
+
+--- thisFunc() ---
+
+
+--- start doShelves() ---
+
+Box: 5.000000 x 5.000000 x 5.000000
+Box: 1.000000 x 1.000000 x 1.000000
+Box: 1.000000 x 1.000000 x 1.000000
+Box: 1.000000 x 1.000000 x 1.000000
+The total volume held on the shelf is 3.000000
+The total volume held on the shelf is 6126.000000
+This is the total volume on the shelf: 6126.000000
+Shelf's volume: 6126.000000
+Box: 2.000000 x 4.000000 x 6.000000
+Box destructor, 4.000000 x 6.000000 x 2.000000
+Box: 2.000000 x 2.000000 x 2.000000
+Box destructor, 2.000000 x 2.000000 x 2.000000
+Shelf's volume: 181.000000
+
+--- end doShelves() ---
+
+Box destructor, 2.000000 x 2.000000 x 2.000000
+Box destructor, 4.000000 x 6.000000 x 2.000000
+Box destructor, 5.000000 x 5.000000 x 5.000000
+Box destructor, 5.000000 x 5.000000 x 5.000000
+
+--- End main() ---
+
+Box destructor, 990.000000 x 990.000000 x 990.000000
+Box destructor, 20.000000 x 30.000000 x 10.000000
