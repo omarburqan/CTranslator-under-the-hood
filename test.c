@@ -6,13 +6,21 @@ static Box box88;
 void thisFunc()
 {		
     printf("\n--- thisFunc() ---\n\n"); 
-	create_Box2(&box99,99, 99, 99);
+    static int isdeclared_99 = 0;
+	if(!isdeclared_99){
+		create_Box2(&box99,99, 99, 99);
+		isdeclared_99 = 1;
+	}
     multiplySQ(&box99,10);
 }
 void thatFunc()
 {
-    printf("\n--- thatFunc() ---\n\n"); 
-    create_Box2(&box99,88, 88, 88);
+    printf("\n--- thatFunc() ---\n\n");
+    static int isdeclared_88 = 0;
+	if(!isdeclared_88){ 
+    	create_Box2(&box99,88, 88, 88);
+    	isdeclared_88 = 1;
+	}
     multiplySQ(&box88,10);
 }
 
