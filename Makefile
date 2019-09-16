@@ -9,7 +9,7 @@ INC_DIR=../include
 CC=gcc
 LDFLAGS= -g
 
-CFLAGS= -c -Wall -ansi $(LDFLAGS) -pedantic  -Werror -Wconversion -D_DEBUG -I$(INC_DIR)
+CFLAGS= -c -Wall -ansi $(LDFLAGS) -pedantic   -Wconversion -D_DEBUG -I$(INC_DIR)
 CXXFLAGS=$(CFLAGS)
 
 

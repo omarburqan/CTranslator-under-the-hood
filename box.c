@@ -15,7 +15,7 @@ void create_Box2(Box* const box,double l, double w, double h){
     box->width = w;
     box->height = h;
     box->length = l;
- 	printf("Box constructor, %f x %f x %f\n", box->width, box->height, box->length);
+ 	print(box);
 }
 void copyBox(Box* const box1,const Box* const box2){
 	create_Box2(box1,box2->length,box2->width,box2->height);
