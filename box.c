@@ -21,20 +21,20 @@ void copyBox(Box* const box1,const Box* const box2){
 	create_Box2(box1,box2->length,box2->width,box2->height);
 }
 
-void destroy_Box(Box* const box){
+void destroy_Box(const Box* const box){
     printf("Box destructor, %f x %f x %f\n", box->width, box->height, box->length);
 }
 
-double getWidth(Box* const box) {
+double getWidth(const Box* const box) {
 	return box->width;
 }
-double getLength(Box* const box) {
+double getLength(const Box* const box) {
 	return box->length;
 }
-double getHeight(Box* const box) {
+double getHeight(const Box* const box) {
 	return box->height;
 }
-double getVolume(Box* const box) {
+double getVolume(const Box* const box) {
 	double temp ;
 	temp = (box->width * box->length * box->height);
 	return temp;

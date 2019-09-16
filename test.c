@@ -2,11 +2,13 @@
 static Box largeBox;
 static Box box99;
 static Box box88;
+static int isdeclared_99 = 0;
+static int isdeclared_88 = 0;
 
 void thisFunc()
 {		
     printf("\n--- thisFunc() ---\n\n"); 
-    static int isdeclared_99 = 0;
+
 	if(!isdeclared_99){
 		create_Box2(&box99,99, 99, 99);
 		isdeclared_99 = 1;
@@ -16,7 +18,7 @@ void thisFunc()
 void thatFunc()
 {
     printf("\n--- thatFunc() ---\n\n");
-    static int isdeclared_88 = 0;
+
 	if(!isdeclared_88){ 
     	create_Box2(&box99,88, 88, 88);
     	isdeclared_88 = 1;

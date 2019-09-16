@@ -14,14 +14,14 @@ typedef struct Box
 	void create_Box(Box* const);
 	void create_Box1(Box* const,double dim);
     void create_Box2(Box* const,double l, double w, double h);
-    void copyBox( Box* const,const Box* const);
+    void copyBox( Box* const,const Box* const); 
     
-    void destroy_Box(Box* const);
+    void destroy_Box(const Box* const);
 
-    double getWidth(Box* const) ;
-    double getLength(Box* const) ;
-    double getHeight(Box* const) ;
-    double getVolume(Box* const) ;
+    double getWidth (const Box* const) ;
+    double getLength(const Box* const) ;
+    double getHeight(const Box* const) ;
+    double getVolume(const Box* const) ;
     
     void print(Box*) ;
     
