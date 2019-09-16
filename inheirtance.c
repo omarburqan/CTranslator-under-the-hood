@@ -28,6 +28,7 @@ const char* name(const Material_t* const mt) {
 
 void create_PhysicalBox_d3(PhysicalBox* const phys,double l, double w, double h){
 	create_Box2(&phys->box,l,w,h);
+	create_material_t(&(phys->m_material),OTHER);
 	physical_print(phys);
 }
 
@@ -39,6 +40,7 @@ void create_PhysicalBox_d3_t(PhysicalBox* const phys,double l, double w, double 
 
 void create_PhysicalBox_t(PhysicalBox* const phys,Types type){
 	create_material_t(&(phys->m_material),type);
+	create_Box(&phys->box);
 	physical_print(phys);
 }
 
@@ -48,7 +50,10 @@ void destroy_PhysicalBox(PhysicalBox* const phys){
     									getHeight(&phys->box),name(&phys->m_material));
     									
 }
+void copy_physBox( PhysicalBox* const phys, const PhysicalBox* const other){
+	create_PhysicalBox_d3_t(phys,other->box.length,other->box.width,other->box.height,other->m_material.m_type);
 
+}
 Types phys_getMaterial(const PhysicalBox* const phys){
 	return phys->m_material.m_type;
 }
@@ -74,6 +79,7 @@ void create_WeightBox_d4(WeightBox* const wBox,double l, double w, double h, dou
 
 }
 void copy_WeightBox( WeightBox* const wBox,const WeightBox* const other){
+	wBox->m_box=other->m_box;
 	wBox->m_weight=other->m_weight;
 	weight_print(wBox);
 }

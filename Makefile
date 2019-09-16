@@ -1,4 +1,4 @@
-TARGET=main
+TARGET=box
 
 # all .c files in this directory are my sources
 SOURCES=$(wildcard *.c)

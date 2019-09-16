@@ -48,6 +48,8 @@ void create_PhysicalBox_t(PhysicalBox* const,Types);
 
 void destroy_PhysicalBox(PhysicalBox* const);
 
+void copy_physBox( PhysicalBox* const, const PhysicalBox* const);
+
 Types phys_getMaterial(const PhysicalBox* const);
 
 void physical_print(const PhysicalBox* const);
