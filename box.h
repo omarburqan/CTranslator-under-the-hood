@@ -23,7 +23,7 @@ typedef struct Box
     double getHeight(const Box* const) ;
     double getVolume(const Box* const) ;
     
-    void print(Box*) ;
+    void print(const Box* const ) ;
     
     Box* const multiplySQ(Box* const,double mult);
     

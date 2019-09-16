@@ -40,7 +40,7 @@ double getVolume(const Box* const box) {
 	return temp;
 }
 
-void print(Box* box) {
+void print(const Box* const box) {
     printf("Box: %f x %f x %f\n", box->length, box->width, box->height); 
 }
 

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "box.h"
 #include "shelf.h"
+#include "inheirtance.h"
 
 void thisFunc();
 void doBoxes();
