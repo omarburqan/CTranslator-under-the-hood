@@ -12,11 +12,7 @@ typedef enum
     OTHER
 }Types;
 
-typedef struct { char stam;} Materials;
-
-void create_material(Materials * const self);
-
-void copy_material(Materials * const self,const Materials * const other);
+typedef struct { char __unused__; } Materials;
 
 static const char* Materials_getName(Types type);
 
@@ -24,7 +20,7 @@ static const char* Materials_getName(Types type);
 
 typedef struct Material_t
 {
-	Materials m_material;
+	/*Materials m_material;*/
     Types m_type;
 }Material_t;
 
@@ -62,7 +58,6 @@ int physBox_not_equal(const PhysicalBox* const, const PhysicalBox* const);
 typedef struct WeightBox{
 	double m_weight;
 	Box m_box;
-
 }WeightBox;
 
 void create_WeightBox_d4(WeightBox* const,double l, double w, double h, double wgt);
@@ -82,8 +77,4 @@ int wBox_equal(const WeightBox* const, const WeightBox* const);
 int wBox_not_equal(const WeightBox* const, const WeightBox* const);
 
 
-
 #endif /* _INHERITANCE_H__ */
-
-
-

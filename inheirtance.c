@@ -5,14 +5,7 @@ static const char* Materials_getName(Types type)
     const char* const names[] = { "Plastic", "Metal", "Wood", "Paper", "Other" };
     return names[type];
 }
-void Materials_ctor(Materials * const self){
-	
 
-}
-void Materials_cpyctor(Materials * const self,const Materials * const other){
-	
-
-}
 /********************MATERIAL_T***************************/
 
 
@@ -27,9 +20,7 @@ const char* name(const Material_t* const mt) {
 /*************PYSHICAL BOX*****************/
 
 void create_PhysicalBox_d3(PhysicalBox* const phys,double l, double w, double h){
-	create_Box2(&phys->box,l,w,h);
-	create_material_t(&(phys->m_material),OTHER);
-	physical_print(phys);
+	create_PhysicalBox_d3_t(phys,l,w,h,OTHER);
 }
 
 void create_PhysicalBox_d3_t(PhysicalBox* const phys,double l, double w, double h,Types type){
@@ -39,16 +30,13 @@ void create_PhysicalBox_d3_t(PhysicalBox* const phys,double l, double w, double 
 }
 
 void create_PhysicalBox_t(PhysicalBox* const phys,Types type){
-	create_material_t(&(phys->m_material),type);
-	create_Box(&phys->box);
-	physical_print(phys);
+	create_PhysicalBox_d3_t(phys,1,1,1,type);
 }
 
 void destroy_PhysicalBox(PhysicalBox* const phys){
-	destroy_Box(&phys->box);
     printf("PhysicalBox dtor, %f x %f x %f, %s; ", getLength(&phys->box), getWidth(&phys->box), 
     									getHeight(&phys->box),name(&phys->m_material));
-    									
+	destroy_Box(&phys->box);
 }
 void copy_physBox( PhysicalBox* const phys, const PhysicalBox* const other){
 	create_PhysicalBox_d3_t(phys,other->box.length,other->box.width,other->box.height,other->m_material.m_type);
@@ -73,21 +61,21 @@ int physBox_not_equal(const PhysicalBox* const lhs, const PhysicalBox* const rhs
 }
 /********** weight box *************/
 void create_WeightBox_d4(WeightBox* const wBox,double l, double w, double h, double wgt){
-	wBox->m_weight=wgt;
 	create_Box2(&wBox->m_box,l,w,h);
+	wBox->m_weight=wgt;
 	weight_print(wBox);
 
 }
 void copy_WeightBox( WeightBox* const wBox,const WeightBox* const other){
-	wBox->m_box=other->m_box;
+	copyBox(&wBox->m_box,&other->m_box);
 	wBox->m_weight=other->m_weight;
 	weight_print(wBox);
 }
 
 void destroy_WeightBox(const WeightBox* const wBox){
-	destroy_Box(&wBox->m_box);
 	printf("Destructing WeightBox; ");
     weight_print(wBox);
+	destroy_Box(&wBox->m_box);
 }
 
 void copy_assignWeightbox(WeightBox* const wBox,const WeightBox* const other){
