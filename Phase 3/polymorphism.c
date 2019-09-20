@@ -4,8 +4,8 @@
 #include <stdlib.h>
 
 void Ctor_TextFormatter(TextFormatter* const this){
-	this->m_TextFormatter_function.dtor_TextFormatter = Dtor_TextFormatter;	
-	this->m_TextFormatter_function.print_TextFormatter = NULL;
+	this->m_TextFormatter_vtable.dtor_TextFormatter = Dtor_TextFormatter;	
+	this->m_TextFormatter_vtable.print = NULL;
 }
 void Dtor_TextFormatter(TextFormatter* const this)  {
 	
@@ -19,7 +19,7 @@ static int getId(){
 /**************************************/
 void Ctor_DefaultTextFormatter(DefaultTextFormatter* const this){
 	Ctor_TextFormatter(&this->m_textFormatter);
-	this->m_textFormatter.m_TextFormatter_function.print_TextFormatter = print_DefaultTextFormatter_text;
+	this->m_textFormatter.m_TextFormatter_vtable.print = print_DefaultTextFormatter_text;
 	*((int*)&this->m_id) = getId();
     printf("--- DefaultTextFormatter Default CTOR\n########## C %d ##########\n", this->m_id);
 }
@@ -39,7 +39,7 @@ void Dtor_DefaultTextFormatter(DefaultTextFormatter* const this){
     printf("--- DefaultTextFormatter DTOR\n########## D %d ##########\n", this->m_id);
     Dtor_TextFormatter(&this->m_textFormatter);
 }
-void print_DefaultTextFormatter_text(const char* text){
+void print_DefaultTextFormatter_text(const void* const this,const char* text){
 	printFunc("[DefaultTextFormatter::print(const char*)]");    
     printf("%s\n", text);	
 }
@@ -54,17 +54,22 @@ DefaultTextFormatter* generateFormatterArray(){
 }
 /***********************************************/
 void Ctor_PrePostFixer(PrePostFixer* const this,const char* prefix, const char* postfix){
-	Ctor_DefaultTextFormatter(&this->m_PrePostFixer_function.m_DefaultTextFormatter);
-	
+	Ctor_DefaultTextFormatter(&this->m_PrePostFixer_vtable.m_DefaultTextFormatter);
+	this->m_PrePostFixer_vtable.m_DefaultTextFormatter.m_textFormatter.m_TextFormatter_vtable.print = print_PrePostFixer;
+	/*this->m_PrePostFixer_vtable.m_print = print_PrePostFixer_Long_Char*/;
+	/* init pointer to virtual functions */
 	this->pre = prefix;
 	this->post = postfix;
     printf("--- PrePostFixer CTOR: \"%s\"...\"%s\"\n", this->pre, this->post);
 }
 void Dtor_PrePostFixer(PrePostFixer* const this){
     printf("--- PrePostFixer DTOR: \"%s\"...\"%s\"\n", this->pre, this->post);
-	Dtor_DefaultTextFormatter(&this->m_PrePostFixer_function.m_DefaultTextFormatter);
+	Dtor_DefaultTextFormatter(&this->m_PrePostFixer_vtable.m_DefaultTextFormatter);
 }
-
+void print_PrePostFixer(const void* const this,const char* text){
+	printFunc("[PrePostFixer::print(const char*)]");
+    printf("%s%s%s\n",((PrePostFixer*)this)->pre, text, ((PrePostFixer*)this)->post);	
+}
 
 
 

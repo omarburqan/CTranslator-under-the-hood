@@ -1,21 +1,20 @@
 #ifndef __POLYMORPHISM_H__
 #define __POLYMORPHISM_H__
 
-
 #define printFunc(fname) printf("%-60s | ", (const char*) fname)
 
 typedef struct TextFormatter TextFormatter;
 
-typedef void (*print_textFormatter_ptr)(const char* ) ; 
+typedef void (*print_textFormatter_ptr)(const void* const,const char* ) ; 
 typedef void (*Dtor_ptr)(TextFormatter* const) ;
 
-typedef struct TextFormatter_function{
+typedef struct {
 	Dtor_ptr dtor_TextFormatter;
-	print_textFormatter_ptr print_TextFormatter;
-}TextFormatter_function;
+	print_textFormatter_ptr print;
+}TextFormatter_vtable;
 
 struct TextFormatter{
-	TextFormatter_function m_TextFormatter_function;
+	TextFormatter_vtable m_TextFormatter_vtable;
 };
 
 void Ctor_TextFormatter(TextFormatter* const);	
@@ -42,23 +41,23 @@ DefaultTextFormatter* const copyOperator_DefaultTextFormatter_equal(const Defaul
 
 void Dtor_DefaultTextFormatter();
 
-void print_DefaultTextFormatter_text(const char* text);
+void print_DefaultTextFormatter_text(const void* const,const char* text);
 
 DefaultTextFormatter* generateFormatterArray();
 
 /************ PrePostFixer ********************/
-typedef void(*print_PrePostFixer_Long_Char)(long num, char symbol);
-typedef void(*getDefaultSymbol_PrePostFixer)();
+typedef void(*print_PrePostFixer_Long_Char_ptr)(const void* const,long num, char symbol);
+typedef void(*getDefaultSymbol_PrePostFixer)(const void* const);
 
 typedef struct {
 	DefaultTextFormatter m_DefaultTextFormatter;
-	print_PrePostFixer_Long_Char m_print;
+	print_PrePostFixer_Long_Char_ptr m_print;
 	getDefaultSymbol_PrePostFixer m_getDefaultSymbol;
-}PrePostFixer_function;
+}PrePostFixer_vtable;
 
 typedef struct{
 
-	PrePostFixer_function m_PrePostFixer_function;
+	PrePostFixer_vtable m_PrePostFixer_vtable;
 	const char* pre;
     const char* post;
 }PrePostFixer;
@@ -67,30 +66,31 @@ void Ctor_PrePostFixer(PrePostFixer* const,const char* prefix, const char* postf
 
 void Dtor_PrePostFixer(PrePostFixer* const);
 
+void print_PrePostFixer(const void* const,const char* text);
 
+#define print_PrePostFixer_Long_Char(this,num,symbol) \
+	printFunc("[PrePostFixer::print(long, char)]"); \
+    printf("-->\n") ;\
+    if (symbol)    \
+        print_num(num, symbol);\
+    else \
+        print_num(num); 
+        
+#define getDefaultSymbol_PrePostFixer(this) return '\0';
 
+#define getPrefix_PrePostFixer(this) return this->pre
 
+#define getPostfix_PrePostFixer(this) return this->pre
 
-/*
-class PrePostFixer
-{
-public:
+#define print_num_PrePostFixer_long(num) \
+	printFunc("[PrePostFixer::print_num(long)]"); \
+    printf("%s%ld%s\n", pre, num, post);
     
 
-    virtual void print(const char* text) const;
-    virtual void print(long num, char symbol = '\0') const;
-
-    virtual char getDefaultSymbol() const;
-
-protected:
-    const char* getPrefix() const;
-    const char* getPostfix() const;
-
-private:
-    void print_num(long num) const;
-    void print_num(long num, char symbol) const;
-
-};
-*/
+#define print_num_PrePostFixer_long_char(num,symbol) \
+	printFunc("[PrePostFixer::print_num(long, char)]"); \
+    printf("%s%c%ld%s\n", pre, symbol, num, post);
+    
+    
 
 #endif /* __POLYMORPHISM_H__ */
