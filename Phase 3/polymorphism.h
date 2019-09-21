@@ -140,8 +140,48 @@ void print_PrePostHashFixer_long_char(const PrePostHashFixer* const,long num, ch
 #define getDefaultSymbol_PrePostHashFixer() DEFAULT_SYMBOL_PrePostHashFixer
 
 /******* PrePostFloatDollarFixer ********************/
- 
-    
+
+typedef struct {
+	PrePostDollarFixer m_PrePostDollarFixer;
+
+
+}PrePostFloatDollarFixer;
+
+#define DEFAULT_SYMBOL_PrePostFloatDollarFixer '#'
+
+void Ctor_PrePostFloatDollarFixer(PrePostFloatDollarFixer* const,const char* prefix, const char* postfix);
+
+void Dtor_PrePostFloatDollarFixer(PrePostFloatDollarFixer* const);
+
+void print_PrePostFloatDollarFixer_num(const PrePostFloatDollarFixer* const,float num);
+
+void print_PrePostFloatDollarFixer_float_char(const PrePostFloatDollarFixer* const,float num, char symbol);
+
+#define getDefaultSymbol_PrePostFloatDollarFixer() DEFAULT_SYMBOL_PrePostFloatDollarFixer
+
+/************ PrePostChecker *********************/
+
+typedef struct{
+	PrePostFloatDollarFixer m_PrePostFloatDollarFixer;
+}PrePostChecker;
+
+void Ctor_PrePostChecker(PrePostChecker* const);
+
+void Dtor_PrePostChecker(PrePostChecker* const);
+
+void printThisSymbolUsingFunc_PPC(const PrePostChecker* const);
+
+void printThisSymbolDirectly_PPC(const PrePostChecker* const);
+
+void printDollarSymbolByCastUsingFunc_PPC(const PrePostChecker* const);
+
+void printDollarSymbolByScopeUsingFunc_PPC(const PrePostChecker* const);
+
+void printDollarSymbolByCastDirectly_PPC(const PrePostChecker* const);
+
+void printDollarSymbolByScopeDirectly(const PrePostChecker* const);
+
+
     
 
 #endif /* __POLYMORPHISM_H__ */

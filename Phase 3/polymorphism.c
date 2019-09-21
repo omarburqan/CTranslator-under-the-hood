@@ -77,7 +77,6 @@ void print_PrePostFixer(const void* const this,const char* text){
 
 void Ctor_PrePostDollarFixer(PrePostDollarFixer* const this, const char* prefix , const char* postfix){
 	Ctor_PrePostFixer(&this->m_PrePostFixer,prefix,postfix);
-	
 	this->m_PrePostFixer.m_PrePostFixer_vtable.m_print = print_PrePostDollarFixer_long_char ;
     printf("--- PrePostDollarFixer CTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostFixer), 
     															getPostfix_PrePostFixer(&this->m_PrePostFixer));
@@ -153,14 +152,76 @@ void print_PrePostHashFixer_long_char(const PrePostHashFixer* const this,long nu
     print_PrePostHashFixer_double_char(this,(double)(num), symbol);
 }
 
-/****************************************/
+/*************************************************/
 
+void Ctor_PrePostFloatDollarFixer(PrePostFloatDollarFixer* const this,const char* prefix, const char* postfix){
+	Ctor_PrePostDollarFixer(&this->m_PrePostDollarFixer,prefix,postfix);
+    printf("--- PrePostFloatDollarFixer CTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer), 
+   															getPostfix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer));
+}
 
+void Dtor_PrePostFloatDollarFixer(PrePostFloatDollarFixer* const this){
+	Dtor_PrePostDollarFixer(&this->m_PrePostDollarFixer);
+    printf("--- PrePostFloatDollarFixer DTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer), 
+   															getPostfix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer));
+}
 
+void print_PrePostFloatDollarFixer_num(const PrePostFloatDollarFixer* const this,float num){
+	printFunc("[PrePostFloatDollarFixer::print(float)]");
+    printf("-->\n");
+    print_PrePostFloatDollarFixer_float_char(this,num, DEFAULT_SYMBOL_PrePostFloatDollarFixer);
+}
 
+void print_PrePostFloatDollarFixer_float_char(const PrePostFloatDollarFixer* const this,float num, char symbol){
+	printFunc("[PrePostFloatDollarFixer::print(float, char)]"); 	
+	printf("%s%c%.2f%s\n", getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer), symbol, num, 
+							getPostfix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer));
+}
 
+/*******************************************************/
 
+void Ctor_PrePostChecker(PrePostChecker* const this){
+	Ctor_PrePostFloatDollarFixer(&this->m_PrePostFloatDollarFixer,"[[[[ ", " ]]]]");
+	printf("--- PrePostChecker CTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostFloatDollarFixer.m_PrePostDollarFixer.m_PrePostFixer), getPostfix_PrePostFixer(&this->m_PrePostFloatDollarFixer.m_PrePostDollarFixer.m_PrePostFixer));
+}
 
+void Dtor_PrePostChecker(PrePostChecker* const this){
+	Dtor_PrePostFloatDollarFixer(&this->m_PrePostFloatDollarFixer);
+    printf("--- PrePostChecker CTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostFloatDollarFixer.m_PrePostDollarFixer.m_PrePostFixer), getPostfix_PrePostFixer(&this->m_PrePostFloatDollarFixer.m_PrePostDollarFixer.m_PrePostFixer));
+}
+
+void printThisSymbolUsingFunc_PPC(const PrePostChecker* const this){
+	printFunc("[PrePostChecker::printThisSymbolUsingFunc()]");
+
+    printf("Default symbol is %c\n", getDefaultSymbol_PrePostFloatDollarFixer());
+}
+
+void printThisSymbolDirectly_PPC(const PrePostChecker* const this){
+	printFunc("[PrePostChecker::printThisSymbolDirectly()]");
+
+    printf("Default symbol is %c\n", DEFAULT_SYMBOL_PrePostFloatDollarFixer);
+}
+
+void printDollarSymbolByCastUsingFunc_PPC(const PrePostChecker* const this){
+	printFunc("[PrePostChecker::printDollarSymbolByCastUsingFunc()]");
+
+    printf("Default symbol is %c\n", getDefaultSymbol_PrePostDollarFixer());
+}
+void printDollarSymbolByScopeUsingFunc_PPC(const PrePostChecker* const this){
+	printFunc("[PrePostChecker::printDollarSymbolByCastDirectly()]");
+
+    printf("Default symbol is %c\n", DEFAULT_SYMBOL_PrePostDollarFixer);
+}
+void printDollarSymbolByCastDirectly_PPC(const PrePostChecker* const this){
+	printFunc("[PrePostChecker::printDollarSymbolByCastDirectly()]");
+
+    printf("Default symbol is %c\n", DEFAULT_SYMBOL_PrePostDollarFixer);
+}
+void printDollarSymbolByScopeDirectly(const PrePostChecker* const this){
+	printFunc("[PrePostChecker::printDollarSymbolByScopeDirectly()]");
+
+    printf("Default symbol is %c\n", DEFAULT_SYMBOL_PrePostDollarFixer);
+}
 
 
 
