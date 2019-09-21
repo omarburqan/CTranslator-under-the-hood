@@ -134,9 +134,10 @@ void Ctor_PrePostHashFixer(PrePostHashFixer* const this,int precision){
 }
 
 void Dtor_PrePostHashFixer(PrePostHashFixer* const this){
-	Dtor_PrePostDollarFixer(&this->m_PrePostDollarFixer);
-    printf("--- PrePostHashFixer DTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer), 
+	printf("--- PrePostHashFixer DTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer), 
    															getPostfix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer));
+	Dtor_PrePostDollarFixer(&this->m_PrePostDollarFixer);
+    
 }
 
 void print_PrePostHashFixer_int_char(const PrePostHashFixer* const this,int num, char symbol){
@@ -161,9 +162,10 @@ void Ctor_PrePostFloatDollarFixer(PrePostFloatDollarFixer* const this,const char
 }
 
 void Dtor_PrePostFloatDollarFixer(PrePostFloatDollarFixer* const this){
-	Dtor_PrePostDollarFixer(&this->m_PrePostDollarFixer);
-    printf("--- PrePostFloatDollarFixer DTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer), 
+	printf("--- PrePostFloatDollarFixer DTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer), 
    															getPostfix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer));
+	Dtor_PrePostDollarFixer(&this->m_PrePostDollarFixer);
+    
 }
 
 void print_PrePostFloatDollarFixer_num(const PrePostFloatDollarFixer* const this,float num){
@@ -186,41 +188,51 @@ void Ctor_PrePostChecker(PrePostChecker* const this){
 }
 
 void Dtor_PrePostChecker(PrePostChecker* const this){
+	printf("--- PrePostChecker CTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostFloatDollarFixer.m_PrePostDollarFixer.m_PrePostFixer), getPostfix_PrePostFixer(&this->m_PrePostFloatDollarFixer.m_PrePostDollarFixer.m_PrePostFixer));
 	Dtor_PrePostFloatDollarFixer(&this->m_PrePostFloatDollarFixer);
-    printf("--- PrePostChecker CTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostFloatDollarFixer.m_PrePostDollarFixer.m_PrePostFixer), getPostfix_PrePostFixer(&this->m_PrePostFloatDollarFixer.m_PrePostDollarFixer.m_PrePostFixer));
+    
 }
 
-void printThisSymbolUsingFunc_PPC(const PrePostChecker* const this){
+void printThisSymbolUsingFunc_PPC(/*const PrePostChecker* const this*/ ){
 	printFunc("[PrePostChecker::printThisSymbolUsingFunc()]");
 
     printf("Default symbol is %c\n", getDefaultSymbol_PrePostFloatDollarFixer());
 }
 
-void printThisSymbolDirectly_PPC(const PrePostChecker* const this){
+void printThisSymbolDirectly_PPC(/*const PrePostChecker* const this*/ ){
 	printFunc("[PrePostChecker::printThisSymbolDirectly()]");
 
     printf("Default symbol is %c\n", DEFAULT_SYMBOL_PrePostFloatDollarFixer);
 }
 
-void printDollarSymbolByCastUsingFunc_PPC(const PrePostChecker* const this){
+void printDollarSymbolByCastUsingFunc_PPC(/*const PrePostChecker* const this*/ ){
 	printFunc("[PrePostChecker::printDollarSymbolByCastUsingFunc()]");
 
     printf("Default symbol is %c\n", getDefaultSymbol_PrePostDollarFixer());
 }
-void printDollarSymbolByScopeUsingFunc_PPC(const PrePostChecker* const this){
+void printDollarSymbolByScopeUsingFunc_PPC(/*const PrePostChecker* const this*/ ){
 	printFunc("[PrePostChecker::printDollarSymbolByCastDirectly()]");
 
     printf("Default symbol is %c\n", DEFAULT_SYMBOL_PrePostDollarFixer);
 }
-void printDollarSymbolByCastDirectly_PPC(const PrePostChecker* const this){
+void printDollarSymbolByCastDirectly_PPC(/*const PrePostChecker* const this*/ ){
 	printFunc("[PrePostChecker::printDollarSymbolByCastDirectly()]");
 
     printf("Default symbol is %c\n", DEFAULT_SYMBOL_PrePostDollarFixer);
 }
-void printDollarSymbolByScopeDirectly(const PrePostChecker* const this){
+void printDollarSymbolByScopeDirectly(/*const PrePostChecker* const this*/ ){
 	printFunc("[PrePostChecker::printDollarSymbolByScopeDirectly()]");
 
     printf("Default symbol is %c\n", DEFAULT_SYMBOL_PrePostDollarFixer);
+}
+/*****************************************/
+
+void print_Multiplier(const void* const this , const char * text){
+    int i;	
+	printFunc("[Multiplier::print(const char*)]");
+    for (i = 0; i < ((Multiplier*)this)->m_Multiplier_times; ++i)
+        printf("%s", text);
+    printf("\n");
 }
 
 

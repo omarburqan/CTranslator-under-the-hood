@@ -143,8 +143,6 @@ void print_PrePostHashFixer_long_char(const PrePostHashFixer* const,long num, ch
 
 typedef struct {
 	PrePostDollarFixer m_PrePostDollarFixer;
-
-
 }PrePostFloatDollarFixer;
 
 #define DEFAULT_SYMBOL_PrePostFloatDollarFixer '#'
@@ -169,19 +167,40 @@ void Ctor_PrePostChecker(PrePostChecker* const);
 
 void Dtor_PrePostChecker(PrePostChecker* const);
 
-void printThisSymbolUsingFunc_PPC(const PrePostChecker* const);
+void printThisSymbolUsingFunc_PPC(/*const PrePostChecker* const*/);
 
-void printThisSymbolDirectly_PPC(const PrePostChecker* const);
+void printThisSymbolDirectly_PPC(/*const PrePostChecker* const*/);
 
-void printDollarSymbolByCastUsingFunc_PPC(const PrePostChecker* const);
+void printDollarSymbolByCastUsingFunc_PPC(/*const PrePostChecker* const*/);
 
-void printDollarSymbolByScopeUsingFunc_PPC(const PrePostChecker* const);
+void printDollarSymbolByScopeUsingFunc_PPC(/*const PrePostChecker* const*/);
 
-void printDollarSymbolByCastDirectly_PPC(const PrePostChecker* const);
+void printDollarSymbolByCastDirectly_PPC(/*const PrePostChecker* const*/);
 
-void printDollarSymbolByScopeDirectly(const PrePostChecker* const);
+void printDollarSymbolByScopeDirectly(/*const PrePostChecker* const*/);
+
+/*********** Multiplier *************/
+
+typedef struct {
+	DefaultTextFormatter m_DefaultTextFormatter;
+	int m_Multiplier_times;
+}Multiplier;
+
+#define Ctor_Multiplier(this,t) \
+	Ctor_DefaultTextFormatter(&this->m_DefaultTextFormatter); \
+	this->m_DefaultTextFormatter.m_textFormatter.m_TextFormatter_vtable.print = print_Multiplier; \
+	this->m_Multiplier_times = t; \
+    printf("--- Multiplier CTOR: times = %d\n", this->m_Multiplier_times); \
+
+#define Dtor_Multiplier(this) \
+    printf("--- Multiplier DTOR: times = %d\n", this->m_Multiplier_times);	\
+	Dtor_DefaultTextFormatter(&this->m_DefaultTextFormatter);
+
+void print_Multiplier(const void* const , const char * const);
+
+#define getTimes_Multiplier(this) ((Multiplier*)this)->m_Multiplier_times
 
 
+#define setTimes_Multiplier(this,t) ((Multiplier*)this)->m_Multiplier_times = t
     
-
 #endif /* __POLYMORPHISM_H__ */
