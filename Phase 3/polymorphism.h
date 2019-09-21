@@ -28,6 +28,7 @@ static int next_id;
 static int getId();
  
 /*********** DefaultTextFormatter *************/
+
 typedef struct{
 	TextFormatter m_textFormatter;
     const int m_id;
@@ -46,6 +47,7 @@ void print_DefaultTextFormatter_text(const void* const,const char* text);
 DefaultTextFormatter* generateFormatterArray();
 
 /************ PrePostFixer ********************/
+
 typedef void(*print_PrePostFixer_Long_Char_ptr)(const void* const,long num, char symbol);
 typedef void(*getDefaultSymbol_PrePostFixer)(const void* const);
 
@@ -76,20 +78,46 @@ void print_PrePostFixer(const void* const,const char* text);
     else \
         print_num(num); 
         
-#define getDefaultSymbol_PrePostFixer(this) return '\0';
+#define getDefaultSymbol_PrePostFixer() '\0'
 
-#define getPrefix_PrePostFixer(this) return this->pre
+#define getPrefix_PrePostFixer(this) ((PrePostFixer*)this)->pre
 
-#define getPostfix_PrePostFixer(this) return this->pre
+#define getPostfix_PrePostFixer(this) ((PrePostFixer*)this)->post
 
-#define print_num_PrePostFixer_long(num) \
+#define print_num_PrePostFixer_long(this,num) \
 	printFunc("[PrePostFixer::print_num(long)]"); \
-    printf("%s%ld%s\n", pre, num, post);
+    printf("%s%ld%s\n", this->pre, num, this->post);
     
 
-#define print_num_PrePostFixer_long_char(num,symbol) \
+#define print_num_PrePostFixer_long_char(this,num,symbol) \
 	printFunc("[PrePostFixer::print_num(long, char)]"); \
-    printf("%s%c%ld%s\n", pre, symbol, num, post);
+    printf("%s%c%ld%s\n", this->pre, symbol, num, this->post);
+  
+/************* PrePostDollarFixer ***********************/    
+
+typedef struct{
+	PrePostFixer m_PrePostFixer;
+}PrePostDollarFixer;
+#define DEFAULT_SYMBOL_PrePostDollarFixer '$'
+
+void Ctor_PrePostDollarFixer(PrePostDollarFixer* const , const char* prefix , const char* postfix);
+
+void copyCtor_PrePostDollarFixer(PrePostDollarFixer* const ,const PrePostDollarFixer* const );
+
+void Dtor_PrePostDollarFixer(PrePostDollarFixer* const);
+
+void print_PrePostDollarFixer_int_char(const PrePostDollarFixer* const,int num, char symbol);
+
+void print_PrePostDollarFixer_long_char(const void* const,long num, char symbol);
+
+void print_PrePostDollarFixer_double_char(const PrePostDollarFixer* const,double num, char symbol);
+
+#define getDefaultSymbol_PrePostDollarFixer() DEFAULT_SYMBOL_PrePostDollarFixer
+
+/*********************************************/
+    
+    
+    
     
     
 

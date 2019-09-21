@@ -55,9 +55,11 @@ DefaultTextFormatter* generateFormatterArray(){
 /***********************************************/
 void Ctor_PrePostFixer(PrePostFixer* const this,const char* prefix, const char* postfix){
 	Ctor_DefaultTextFormatter(&this->m_PrePostFixer_vtable.m_DefaultTextFormatter);
-	this->m_PrePostFixer_vtable.m_DefaultTextFormatter.m_textFormatter.m_TextFormatter_vtable.print = print_PrePostFixer;
-	/*this->m_PrePostFixer_vtable.m_print = print_PrePostFixer_Long_Char*/;
-	/* init pointer to virtual functions */
+	this->m_PrePostFixer_vtable.m_DefaultTextFormatter.
+							m_textFormatter.m_TextFormatter_vtable.print = print_PrePostFixer;
+		
+	/* init pointer to inline virtual functions */
+	
 	this->pre = prefix;
 	this->post = postfix;
     printf("--- PrePostFixer CTOR: \"%s\"...\"%s\"\n", this->pre, this->post);
@@ -70,11 +72,56 @@ void print_PrePostFixer(const void* const this,const char* text){
 	printFunc("[PrePostFixer::print(const char*)]");
     printf("%s%s%s\n",((PrePostFixer*)this)->pre, text, ((PrePostFixer*)this)->post);	
 }
+/************************************************/
 
 
+void Ctor_PrePostDollarFixer(PrePostDollarFixer* const this, const char* prefix , const char* postfix){
+	Ctor_PrePostFixer(&this->m_PrePostFixer,prefix,postfix);
+	
+	this->m_PrePostFixer.m_PrePostFixer_vtable.m_print = print_PrePostDollarFixer_long_char ;
+    printf("--- PrePostDollarFixer CTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostFixer), 
+    															getPostfix_PrePostFixer(&this->m_PrePostFixer));
+   															
+}
 
+void copyCtor_PrePostDollarFixer(PrePostDollarFixer* const this,const PrePostDollarFixer* const other){
+    Ctor_DefaultTextFormatter(&this->m_PrePostFixer.m_PrePostFixer_vtable.m_DefaultTextFormatter);
+	this->m_PrePostFixer.m_PrePostFixer_vtable.m_DefaultTextFormatter.
+							m_textFormatter.m_TextFormatter_vtable.print = print_PrePostFixer;			
+	this->m_PrePostFixer.m_PrePostFixer_vtable.m_print = print_PrePostDollarFixer_long_char ;		
+	/* init pointer to inline virtual functions */
+	this->m_PrePostFixer.pre = other->m_PrePostFixer.pre;
+	this->m_PrePostFixer.post = other->m_PrePostFixer.post;
+    printf("--- PrePostDollarFixer Copy CTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostFixer) ,
+																	 getPostfix_PrePostFixer(&this->m_PrePostFixer));
+}
 
+void Dtor_PrePostDollarFixer(PrePostDollarFixer* const this){
+    printf("--- PrePostDollarFixer DTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostFixer),
+    															getPostfix_PrePostFixer(&this->m_PrePostFixer));
+    Dtor_PrePostFixer(&this->m_PrePostFixer);
+    
+}
+void print_PrePostDollarFixer_int_char(const PrePostDollarFixer* const this,int num, char symbol){
+	printFunc("[PrePostDollarFixer::print(int, char)]"); 
+    printf("-->\n");
+	
+    print_PrePostDollarFixer_long_char(this,(long)(num), symbol);
+}
 
+void print_PrePostDollarFixer_long_char(const void* const this,long num, char symbol){
+	printFunc("[PrePostDollarFixer::print(long, char)]");
+    printf("-->\n");
+
+    print_num_PrePostFixer_long_char((&((PrePostDollarFixer*)this)->m_PrePostFixer),num, symbol);
+}
+
+void print_PrePostDollarFixer_double_char(const PrePostDollarFixer* const this,double num, char symbol){
+	printFunc("[PrePostDollarFixer::print(double, char)]"); 
+    printf("%s%c%f%s\n", getPrefix_PrePostFixer(&this->m_PrePostFixer), symbol,num, 
+    										getPostfix_PrePostFixer(&this->m_PrePostFixer));
+}
+/***********************************/
 
 
 
