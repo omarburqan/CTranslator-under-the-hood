@@ -58,7 +58,6 @@ typedef struct {
 }PrePostFixer_vtable;
 
 typedef struct{
-
 	PrePostFixer_vtable m_PrePostFixer_vtable;
 	const char* pre;
     const char* post;
@@ -70,20 +69,6 @@ void Dtor_PrePostFixer(PrePostFixer* const);
 
 void print_PrePostFixer(const void* const,const char* text);
 
-#define print_PrePostFixer_Long_Char(this,num,symbol) \
-	printFunc("[PrePostFixer::print(long, char)]"); \
-    printf("-->\n") ;\
-    if (symbol)    \
-        print_num(num, symbol);\
-    else \
-        print_num(num); 
-        
-#define getDefaultSymbol_PrePostFixer() '\0'
-
-#define getPrefix_PrePostFixer(this) ((PrePostFixer*)this)->pre
-
-#define getPostfix_PrePostFixer(this) ((PrePostFixer*)this)->post
-
 #define print_num_PrePostFixer_long(this,num) \
 	printFunc("[PrePostFixer::print_num(long)]"); \
     printf("%s%ld%s\n", this->pre, num, this->post);
@@ -92,12 +77,29 @@ void print_PrePostFixer(const void* const,const char* text);
 #define print_num_PrePostFixer_long_char(this,num,symbol) \
 	printFunc("[PrePostFixer::print_num(long, char)]"); \
     printf("%s%c%ld%s\n", this->pre, symbol, num, this->post);
+    
+#define print_PrePostFixer_Long_Char(this,num,symbol) \
+	printFunc("[PrePostFixer::print(long, char)]"); \
+    printf("-->\n") ;\
+    if (symbol)    \
+        print_num_PrePostFixer_long_char(this,num, symbol);\
+    else \
+        print_num_PrePostFixer_long(this,num); 
+        
+#define getDefaultSymbol_PrePostFixer() '\0'
+
+#define getPrefix_PrePostFixer(this) ((PrePostFixer*)this)->pre
+
+#define getPostfix_PrePostFixer(this) ((PrePostFixer*)this)->post
+
+
   
 /************* PrePostDollarFixer ***********************/    
 
 typedef struct{
 	PrePostFixer m_PrePostFixer;
 }PrePostDollarFixer;
+
 #define DEFAULT_SYMBOL_PrePostDollarFixer '$'
 
 void Ctor_PrePostDollarFixer(PrePostDollarFixer* const , const char* prefix , const char* postfix);
@@ -114,10 +116,31 @@ void print_PrePostDollarFixer_double_char(const PrePostDollarFixer* const,double
 
 #define getDefaultSymbol_PrePostDollarFixer() DEFAULT_SYMBOL_PrePostDollarFixer
 
-/*********************************************/
+/*********** PrePostHashFixer *****************/
+
+typedef struct {
+	PrePostDollarFixer m_PrePostDollarFixer;
+	int m_PrePostHashFixer_precision;
+}PrePostHashFixer;
+
+#define DEFAULT_SYMBOL_PrePostHashFixer '#'
+
+void Ctor_PrePostHashFixer(PrePostHashFixer* const,int);
+
+void Dtor_PrePostHashFixer(PrePostHashFixer* const);
+
+void print_PrePostHashFixer_int_char(const PrePostHashFixer* const,int num, char symbol);
+
+void print_PrePostHashFixer_long_char(const PrePostHashFixer* const,long num, char symbol);
+
+#define print_PrePostHashFixer_double_char(this, num, symbol) \
+	printFunc("[PrePostHashFixer::print(double, char)]"); \
+    printf("%s[%c%.*f]%s\n", getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer), symbol, this->m_PrePostHashFixer_precision, 			num, getPostfix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer));
     
-    
-    
+#define getDefaultSymbol_PrePostHashFixer() DEFAULT_SYMBOL_PrePostHashFixer
+
+/******* PrePostFloatDollarFixer ********************/
+ 
     
     
 

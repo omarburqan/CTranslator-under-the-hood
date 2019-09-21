@@ -72,8 +72,8 @@ void print_PrePostFixer(const void* const this,const char* text){
 	printFunc("[PrePostFixer::print(const char*)]");
     printf("%s%s%s\n",((PrePostFixer*)this)->pre, text, ((PrePostFixer*)this)->post);	
 }
-/************************************************/
 
+/************************************************/
 
 void Ctor_PrePostDollarFixer(PrePostDollarFixer* const this, const char* prefix , const char* postfix){
 	Ctor_PrePostFixer(&this->m_PrePostFixer,prefix,postfix);
@@ -121,8 +121,39 @@ void print_PrePostDollarFixer_double_char(const PrePostDollarFixer* const this,d
     printf("%s%c%f%s\n", getPrefix_PrePostFixer(&this->m_PrePostFixer), symbol,num, 
     										getPostfix_PrePostFixer(&this->m_PrePostFixer));
 }
-/***********************************/
 
+/*****************************************/
+
+void Ctor_PrePostHashFixer(PrePostHashFixer* const this,int precision){
+	Ctor_PrePostDollarFixer(&this->m_PrePostDollarFixer,"===> ", " <===");
+	this->m_PrePostHashFixer_precision = precision;
+	
+    printf("--- PrePostHashFixer CTOR: \"%s\"...\"%s\", precision: %d\n", 
+    	getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer)
+      , getPostfix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer) , 
+    	this->m_PrePostHashFixer_precision);   
+}
+
+void Dtor_PrePostHashFixer(PrePostHashFixer* const this){
+	Dtor_PrePostDollarFixer(&this->m_PrePostDollarFixer);
+    printf("--- PrePostHashFixer DTOR: \"%s\"...\"%s\"\n", getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer), 
+   															getPostfix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer));
+}
+
+void print_PrePostHashFixer_int_char(const PrePostHashFixer* const this,int num, char symbol){
+	printFunc("[PrePostHashFixer::print(int, char)]"); 
+    printf("-->\n");
+    print_PrePostHashFixer_double_char(this,(double)(num), symbol);
+
+}
+
+void print_PrePostHashFixer_long_char(const PrePostHashFixer* const this,long num, char symbol){
+	printFunc("[PrePostHashFixer::print(long, char)]"); 
+    printf("-->\n");
+    print_PrePostHashFixer_double_char(this,(double)(num), symbol);
+}
+
+/****************************************/
 
 
 
