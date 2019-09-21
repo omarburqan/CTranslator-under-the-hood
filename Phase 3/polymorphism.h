@@ -1,6 +1,6 @@
 #ifndef __POLYMORPHISM_H__
 #define __POLYMORPHISM_H__
-
+#include <stdio.h>
 #define printFunc(fname) printf("%-60s | ", (const char*) fname)
 
 typedef struct TextFormatter TextFormatter;
@@ -82,7 +82,7 @@ void print_PrePostFixer(const void* const,const char* text);
 	printFunc("[PrePostFixer::print(long, char)]"); \
     printf("-->\n") ;\
     if (symbol)    \
-        print_num_PrePostFixer_long_char(this,num, symbol);\
+        {print_num_PrePostFixer_long_char(this,num, symbol);}\
     else \
         print_num_PrePostFixer_long(this,num); 
         

@@ -1,6 +1,6 @@
 #include "polymorphism.h"
 
-#include <stdio.h>
+
 #include <stdlib.h>
 
 void Ctor_TextFormatter(TextFormatter* const this){
@@ -234,6 +234,3 @@ void print_Multiplier(const void* const this , const char * text){
         printf("%s", text);
     printf("\n");
 }
-
-
-
