@@ -1,6 +1,5 @@
 #include "polymorphism.h"
 
-
 #include <stdlib.h>
 
 void Ctor_TextFormatter(TextFormatter* const this){
@@ -10,13 +9,17 @@ void Ctor_TextFormatter(TextFormatter* const this){
 void Dtor_TextFormatter(TextFormatter* const this)  {
 	
 }
+
 /****************************************/
+
 static int next_id = 0;
 
 static int getId(){
 	return next_id++;
 }
+
 /**************************************/
+
 void Ctor_DefaultTextFormatter(DefaultTextFormatter* const this){
 	Ctor_TextFormatter(&this->m_textFormatter);
 	this->m_textFormatter.m_TextFormatter_vtable.print = print_DefaultTextFormatter_text;
@@ -52,7 +55,9 @@ DefaultTextFormatter* generateFormatterArray(){
 	}
 	return new_array;
 }
+
 /***********************************************/
+
 void Ctor_PrePostFixer(PrePostFixer* const this,const char* prefix, const char* postfix){
 	Ctor_DefaultTextFormatter(&this->m_PrePostFixer_vtable.m_DefaultTextFormatter);
 	this->m_PrePostFixer_vtable.m_DefaultTextFormatter.
@@ -131,6 +136,8 @@ void Ctor_PrePostHashFixer(PrePostHashFixer* const this,int precision){
     	getPrefix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer)
       , getPostfix_PrePostFixer(&this->m_PrePostDollarFixer.m_PrePostFixer) , 
     	this->m_PrePostHashFixer_precision);   
+    print_PrePostHashFixer_double_char(this,9999.9999,'#');
+
 }
 
 void Dtor_PrePostHashFixer(PrePostHashFixer* const this){
@@ -208,7 +215,7 @@ void printThisSymbolDirectly_PPC(/*const PrePostChecker* const this*/ ){
 void printDollarSymbolByCastUsingFunc_PPC(/*const PrePostChecker* const this*/ ){
 	printFunc("[PrePostChecker::printDollarSymbolByCastUsingFunc()]");
 
-    printf("Default symbol is %c\n", getDefaultSymbol_PrePostDollarFixer());
+    printf("Default symbol is %c\n", getDefaultSymbol_PrePostFloatDollarFixer());
 }
 void printDollarSymbolByScopeUsingFunc_PPC(/*const PrePostChecker* const this*/ ){
 	printFunc("[PrePostChecker::printDollarSymbolByCastDirectly()]");
@@ -225,6 +232,7 @@ void printDollarSymbolByScopeDirectly(/*const PrePostChecker* const this*/ ){
 
     printf("Default symbol is %c\n", DEFAULT_SYMBOL_PrePostDollarFixer);
 }
+
 /*****************************************/
 
 void print_Multiplier(const void* const this , const char * text){

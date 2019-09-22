@@ -1,5 +1,6 @@
 #ifndef __POLYMORPHISM_H__
 #define __POLYMORPHISM_H__
+
 #include <stdio.h>
 #define printFunc(fname) printf("%-60s | ", (const char*) fname)
 
@@ -145,7 +146,7 @@ typedef struct {
 	PrePostDollarFixer m_PrePostDollarFixer;
 }PrePostFloatDollarFixer;
 
-#define DEFAULT_SYMBOL_PrePostFloatDollarFixer '#'
+#define DEFAULT_SYMBOL_PrePostFloatDollarFixer '@'
 
 void Ctor_PrePostFloatDollarFixer(PrePostFloatDollarFixer* const,const char* prefix, const char* postfix);
 
@@ -187,14 +188,14 @@ typedef struct {
 }Multiplier;
 
 #define Ctor_Multiplier(this,t) \
-	Ctor_DefaultTextFormatter(&this->m_DefaultTextFormatter); \
-	this->m_DefaultTextFormatter.m_textFormatter.m_TextFormatter_vtable.print = print_Multiplier; \
-	this->m_Multiplier_times = t; \
-    printf("--- Multiplier CTOR: times = %d\n", this->m_Multiplier_times); \
+	Ctor_DefaultTextFormatter(&(this)->m_DefaultTextFormatter); \
+	(this)->m_DefaultTextFormatter.m_textFormatter.m_TextFormatter_vtable.print = print_Multiplier; \
+	(this)->m_Multiplier_times = t; \
+    printf("--- Multiplier CTOR: times = %d\n", (this)->m_Multiplier_times); \
 
 #define Dtor_Multiplier(this) \
-    printf("--- Multiplier DTOR: times = %d\n", this->m_Multiplier_times);	\
-	Dtor_DefaultTextFormatter(&this->m_DefaultTextFormatter);
+    printf("--- Multiplier DTOR: times = %d\n", (this)->m_Multiplier_times);	\
+	Dtor_DefaultTextFormatter(&(this)->m_DefaultTextFormatter);
 
 void print_Multiplier(const void* const , const char * const);
 
